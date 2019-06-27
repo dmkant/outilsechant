@@ -93,7 +93,6 @@ constrech<-function(faisabl,data,constr,methode){
              proba<-1/nrow(bsd),
              proba<-(1-bsd$risque)/sum(1-bsd$risque)
              )
-      proba=(1-bsd$risque)/sum(1-bsd$risque)
       if(length(which(proba==0))>0){proba[which(proba==0)]<-0.00000001}
       if(length(segment)>1){
         echant=sample(segment,X[t],prob = proba,replace = F)
