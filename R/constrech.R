@@ -28,7 +28,10 @@ constrech<-function(faisabl,data,constr,methode){
     ##Selection taille des effectifs ####
     if(faisabl$prespara==T){
       #Variable a maximiser
-      taux=data%>%group_by_at(var)%>%summarize(Mean = mean(.data$tauxrep, na.rm=TRUE))%>%arrange_at(var)
+      ifelse(is.null(data$tauxrep),
+             taux<-data%>%group_by_at(var)%>%summarize(Mean =1)%>%arrange_at(var),
+             taux<-data%>%group_by_at(var)%>%summarize(Mean = mean(.data$tauxrep, na.rm=TRUE))%>%arrange_at(var)
+             )
       tx=taux$Mean
       #Cas presence effectif disponible nul####
       nondispo=which(dispo$Freq==0)
@@ -86,6 +89,10 @@ constrech<-function(faisabl,data,constr,methode){
     ech<-function(t){
       segment=nombre[t,1]:nombre[t,2]
       bsd=basesondage[segment,]
+      ifelse(is.null(bsd$risque),
+             proba<-1/nrow(bsd),
+             proba<-(1-bsd$risque)/sum(1-bsd$risque)
+             )
       proba=(1-bsd$risque)/sum(1-bsd$risque)
       if(length(which(proba==0))>0){proba[which(proba==0)]<-0.00000001}
       if(length(segment)>1){
