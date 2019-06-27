@@ -90,7 +90,7 @@ constrech<-function(faisabl,data,constr,methode){
       segment=nombre[t,1]:nombre[t,2]
       bsd=basesondage[segment,]
       ifelse(is.null(bsd$risque),
-             proba<-1/nrow(bsd),
+             proba<-rep(1/nrow(bsd),nrow(bsd)),
              proba<-(1-bsd$risque)/sum(1-bsd$risque)
              )
       if(length(which(proba==0))>0){proba[which(proba==0)]<-0.00000001}
