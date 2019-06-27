@@ -1,0 +1,29 @@
+Package: outilsech
+Title: Creation d'échantillon
+Version: 0.0.0.9000
+Authors@R: person("Hugo", "Miccinilli", email = "Hugo.Miccinilli@kantartns.com", role = c("aut", "cre"))
+Description: Ce package facilite la création d'échantillon selon la méthode des quotas en prenant en compte le comportement des panélistes. C'est un package conçu par et pour l'entreprise Kantar.
+Depends: R (>= 3.4.4)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    magrittr,
+    stats,
+    lpSolve,
+    forcats,
+    dplyr,
+    pracma,
+    tidyr,
+    boot,
+    highcharter,
+    knitr,
+    kableExtra,
+    matrixStats,
+    leaps,
+    shiny,
+    data.table,
+    tidyverse,
+    rlang,
+    plyr,
+RoxygenNote: 6.1.1
