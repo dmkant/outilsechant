@@ -25,8 +25,9 @@ faisable<-function(data,constr,taillech=NA){
       incomp=which(dispo1$Freq[-enlever]<objectif[-enlever])
       ifelse(length(incomp)==1,mess<-paste0("La ligne ",incomp," presente un quota superieur aux disponibiltes du panel",collapse = " "),mess<-paste0("Les lignes ",paste0(incomp,collapse = ", ")," presentent des quotas superieurs aux disponibiltes du panel",collapse = " "))
       message("Impossible")
-      constrmax<-constr[incomp,]
-      constrmax$disponible<-dispo1$Freq[incomp]
+      constrmax<-constr
+      constrmax$disponible<-dispo1$Freq
+      constrmax$sup=dispo1$Freq[-enlever]<objectif[-enlever]
       resu=list(faisable=F,raison=mess,disponibilite=constrmax)
       return(resu)
     }
