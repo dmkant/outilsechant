@@ -15,7 +15,7 @@
 faisable<-function(data,constr,taillech=NA){
   withProgress(message = "Determination de la faisabilite", style = getShinyOption("progress.style", default = "notification"), value = 0, {
     if(is.null(constr)){
-      ifelse(taillech<=nrow(data),resu<-list(faisable=T),resu<-list(faisable=F,raison="La taille de votre échantillon est supérieure au nombre de panélistes disponibles"))
+      ifelse(taillech<=nrow(data),resu<-list(faisable=T),resu<-list(faisable=F,raison=paste("La taille de votre échantillon est supérieure au nombre de panélistes disponibles :", nrow(data))))
       return(resu)
     }
     var=as.character(unique(constr$variables)) #variable des quotas
