@@ -1,4 +1,4 @@
-Package: outilsech
+Package: outilsech2
 Title: Creation d'échantillon
 Version: 0.0.0.9000
 Authors@R: person("Hugo", "Miccinilli", email = "Hugo.Miccinilli@kantartns.com", role = c("aut", "cre"))
