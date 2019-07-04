@@ -13,6 +13,7 @@
 fusion<-function(l){
   if(length(l)==1){
     return(rbind(l[[1]]))
+    
   }
   else{
     return(rbind(fusion(l[-length(l)]),l[length(l)][[1]]))
