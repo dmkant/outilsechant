@@ -102,8 +102,9 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
         print(proba)
         print("risque")
         print(bsd$risque)
-        print(1-bsd$risque)
+        print("somme")
         print(sum(bsd$risque))
+        print(bsd$risque[which(is.na(bsd$risque))])
         echant=sample(segment,X[t],prob = proba,replace = F)
       }
       else{
