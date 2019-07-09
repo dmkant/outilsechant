@@ -118,6 +118,7 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
         nombre=cbind(minimum,maximum)
         if(!is.matrix(nombre)){nombre<-matrix(nombre,1)}
         seqcoup=1:nrow(nombre)
+        print(i)
       }
       return(echantillon)
     }
