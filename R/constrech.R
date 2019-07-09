@@ -120,8 +120,12 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
         a=unlist(sapply(seqcoup,function(x) ech(x,basesondage1 = bsd2)))
         echantillon=c(echantillon,list(bsd2[a,]))
         bsd2=bsd2[-a,]
-        
+        bsd2=bsd2%>%arrange_at(var)
         dispo=as.data.frame(table(bsd2[,var]))
+        if(length(var)>1){dispo=arrange_(.data = dispo,.dots = var)}
+        else{
+          names(dispo)<-c(var,"Freq")
+        }
         dispo=dispo[ind,]
         minimum=c(1,sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x]))+1)[-length(dispo$Freq)])
         maximum= sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x])))
