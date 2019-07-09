@@ -81,6 +81,7 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
     if(!all(X>=0)){print(X)}
     dispo=dispo[ind,]
     basesondage=merge(dispo%>%select(var),data, by = var)%>%arrange_at(var)
+    print(basesondage)
     
     minimum=c(1,sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x]))+1)[-length(dispo$Freq)])
     maximum= sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x])))
