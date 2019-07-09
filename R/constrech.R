@@ -81,7 +81,6 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
     if(!all(X>=0)){print(X)}
     dispo=dispo[ind,]
     basesondage=merge(dispo%>%select(var),data, by = var)%>%arrange_at(var)
-    print(basesondage)
     
     minimum=c(1,sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x]))+1)[-length(dispo$Freq)])
     maximum= sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x])))
@@ -106,15 +105,15 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
       return(echant)
     }
     dupech<-function(x){
-      bsd=basesondage
+      bsd2=basesondage
       echantillon=list()
       for (i in 1:x){
         print(nombre)
-        a=unlist(sapply(seqcoup,function(x) ech(x,basesondage1 = bsd)))
+        a=unlist(sapply(seqcoup,function(x) ech(x,basesondage1 = bsd2)))
         echantillon=c(echantillon,list(bsd[a,]))
-        bsd=bsd[-a,]
+        bsd2=bsd2[-a,]
         
-        dispo=as.data.frame(table(bsd[,var]))
+        dispo=as.data.frame(table(bsd2[,var]))
         dispo=dispo[ind,]
         minimum=c(1,sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x]))+1)[-length(dispo$Freq)])
         maximum= sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x])))
