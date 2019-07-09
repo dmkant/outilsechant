@@ -89,6 +89,8 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
     seqcoup=1:nrow(nombre)
     ech<-function(t,basesondage1=NA){
       segment=nombre[t,1]:nombre[t,2]
+      print(is.data.frame(basesondage1))
+      print(typeof(basesondage1))
       if(!is.data.frame(basesondage1)){basesondage1=basesondage}
       bsd=basesondage1[segment,]
       ifelse(is.null(bsd$risque),
