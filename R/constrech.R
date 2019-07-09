@@ -91,6 +91,7 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
       segment=nombre[t,1]:nombre[t,2]
       print(is.data.frame(basesondage1))
       print(typeof(basesondage1))
+      print(nrow(basesondage1))
       if(!is.data.frame(basesondage1)){basesondage1=basesondage}
       bsd=basesondage1[segment,]
       ifelse(is.null(bsd$risque),
@@ -122,6 +123,7 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
         a=unlist(sapply(seqcoup,function(x) ech(x,basesondage1 = bsd2)))
         echantillon=c(echantillon,list(bsd2[a,]))
         bsd2=bsd2[-a,]
+        print(nrow(bsd2))
         bsd2=bsd2%>%arrange_at(var)
         dispo=as.data.frame(table(bsd2[,var]))
         if(length(var)>1){dispo=arrange_(.data = dispo,.dots = var)}
