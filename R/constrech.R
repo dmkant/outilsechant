@@ -87,12 +87,14 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
     nombre=cbind(minimum,maximum)
     if(!is.matrix(nombre)){nombre<-matrix(nombre,1)}
     seqcoup=1:nrow(nombre)
-    ech<-function(t,basesondage1=NA){
-      segment=nombre[t,1]:nombre[t,2]
+    ech<-function(t,nombre1=nombre,basesondage1=NA){
+      segment=nombre1[t,1]:nombre1[t,2]
       if(!is.data.frame(basesondage1)){basesondage1=basesondage}
       print("ola")
-      print(nombre[t,1])
-      print(nombre[t,2])
+      print(nombre1[t,1])
+      print(nombre1[t,2])
+      print(nombre1)
+      print("nb lignes")
       print(nrow(basesondage1))
       bsd=basesondage1[segment,]
       ifelse(is.null(bsd$risque),
@@ -115,7 +117,7 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
       echantillon=list()
       for (i in 1:x){
         print(nombre)
-        a=unlist(sapply(seqcoup,function(x) ech(x,basesondage1 = bsd2)))
+        a=unlist(sapply(seqcoup,function(x) ech(x,nombre1 = nombre,basesondage1 = bsd2)))
         echantillon=c(echantillon,list(bsd2[a,]))
         bsd2=bsd2[-a,]
         bsd2=bsd2%>%arrange_at(var)
