@@ -108,9 +108,11 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
       bsd=basesondage
       echantillon=list()
       for (i in 1:x){
+        print(nombre)
         a=unlist(sapply(seqcoup,function(x) ech(x,basesondage1 = bsd)))
         echantillon=c(echantillon,list(bsd[a,]))
         bsd=bsd[-a,]
+        
         dispo=as.data.frame(table(bsd[,var]))
         dispo=dispo[ind,]
         minimum=c(1,sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x]))+1)[-length(dispo$Freq)])
