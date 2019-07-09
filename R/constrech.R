@@ -107,15 +107,21 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
     dupech<-function(x){
       bsd=basesondage
       echantillon=list()
-      supprimer=c()
       for (i in 1:x){
-        a=unlist(sapply(seqcoup,ech))
+        a=unlist(sapply(seqcoup,function(x) ech(x,basesondage1 = bsd)))
         echantillon=c(echantillon,list(bsd[a,]))
-        supprimer=c(supprimer,a)
-        bsd=basesondage[-supprimer,]
+        bsd=bsd[-a,]
+        dispo=as.data.frame(table(bsd[,var]))
+        dispo=dispo[ind,]
+        minimum=c(1,sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x]))+1)[-length(dispo$Freq)])
+        maximum= sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x])))
+        nombre=cbind(minimum,maximum)
+        if(!is.matrix(nombre)){nombre<-matrix(nombre,1)}
+        seqcoup=1:nrow(nombre)
       }
       return(echantillon)
     }
+    
     if(is.na(nbsousech)){
       echantillon=basesondage[unlist(sapply(seqcoup,ech)),]
     }
