@@ -17,7 +17,7 @@
 #' #iris$tauxrep<-sample(seq(0,1,0.01),nrow(iris),TRUE)
 #' #constrech(faisabl,iris,constr,TRUE)
 #' #constrech(faisabl,iris,constr,FALSE)
-constrech<-function(faisabl,data,constr,methode){
+constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
   withProgress(message = "Construction de l'échantillon",value = 0, {
     var=unique(as.character(constr$variables))
     dispo=as.data.frame(table(data[,var]))
@@ -81,14 +81,16 @@ constrech<-function(faisabl,data,constr,methode){
     if(!all(X>=0)){print(X)}
     dispo=dispo[ind,]
     basesondage=merge(dispo%>%select(var),data, by = var)%>%arrange_at(var)
+    
     minimum=c(1,sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x]))+1)[-length(dispo$Freq)])
     maximum= sapply(1:length(dispo$Freq),function(x) sum(c(0,dispo$Freq[1:x])))
     nombre=cbind(minimum,maximum)
     if(!is.matrix(nombre)){nombre<-matrix(nombre,1)}
     seqcoup=1:nrow(nombre)
-    ech<-function(t){
+    ech<-function(t,basesondage1=NA){
       segment=nombre[t,1]:nombre[t,2]
-      bsd=basesondage[segment,]
+      if(is.na(basesondage1)){basesondage1=basesondage}
+      bsd=basesondage1[segment,]
       ifelse(is.null(bsd$risque),
              proba<-rep(1/nrow(bsd),nrow(bsd)),
              proba<-(1-bsd$risque)/sum(1-bsd$risque)
@@ -102,7 +104,24 @@ constrech<-function(faisabl,data,constr,methode){
       }
       return(echant)
     }
-    echantillon=basesondage[unlist(sapply(seqcoup,ech)),]
+    dupech<-function(x){
+      bsd=basesondage
+      echantillon=list()
+      supprimer=c()
+      for (i in 1:x){
+        a=unlist(sapply(seqcoup,ech))
+        echantillon=c(echantillon,list(bsd[a,]))
+        supprimer=c(supprimer,a)
+        bsd=basesondage[-supprimer,]
+      }
+      return(echantillon)
+    }
+    if(is.na(nbsousech)){
+      echantillon=basesondage[unlist(sapply(seqcoup,ech)),]
+    }
+    else{
+      echantillon=dupech(nbsousech)
+    }
     #FIN ####
     return(list(echantillon=echantillon,changement=chang))
   })
