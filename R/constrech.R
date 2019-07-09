@@ -110,7 +110,7 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
       for (i in 1:x){
         print(nombre)
         a=unlist(sapply(seqcoup,function(x) ech(x,basesondage1 = bsd2)))
-        echantillon=c(echantillon,list(bsd[a,]))
+        echantillon=c(echantillon,list(bsd2[a,]))
         bsd2=bsd2[-a,]
         
         dispo=as.data.frame(table(bsd2[,var]))
