@@ -89,10 +89,11 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
     seqcoup=1:nrow(nombre)
     ech<-function(t,basesondage1=NA){
       segment=nombre[t,1]:nombre[t,2]
-      print(is.data.frame(basesondage1))
-      print(typeof(basesondage1))
-      print(nrow(basesondage1))
       if(!is.data.frame(basesondage1)){basesondage1=basesondage}
+      print("ola")
+      print(nombre[t,1])
+      print(nombre[t,2])
+      print(nrow(basesondage1))
       bsd=basesondage1[segment,]
       ifelse(is.null(bsd$risque),
              proba<-rep(1/nrow(bsd),nrow(bsd)),
@@ -100,13 +101,6 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
              )
       if(length(which(proba==0))>0){proba[which(proba==0)]<-0.00000001}
       if(length(segment)>1){
-        print(segment)
-        print(X[t])
-        print(proba)
-        print("risque")
-        print(bsd$risque)
-        print("somme")
-        print(sum(bsd$risque))
         print(bsd$risque[which(is.na(bsd$risque))])
         echant=sample(segment,X[t],prob = proba,replace = F)
       }
@@ -115,6 +109,7 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
       }
       return(echant)
     }
+    
     dupech<-function(x){
       bsd2=basesondage
       echantillon=list()
@@ -123,7 +118,6 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
         a=unlist(sapply(seqcoup,function(x) ech(x,basesondage1 = bsd2)))
         echantillon=c(echantillon,list(bsd2[a,]))
         bsd2=bsd2[-a,]
-        print(nrow(bsd2))
         bsd2=bsd2%>%arrange_at(var)
         dispo=as.data.frame(table(bsd2[,var]))
         if(length(var)>1){dispo=arrange_(.data = dispo,.dots = var)}
@@ -136,7 +130,7 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
         nombre=cbind(minimum,maximum)
         if(!is.matrix(nombre)){nombre<-matrix(nombre,1)}
         seqcoup=1:nrow(nombre)
-        print(i)
+        print(nombre)
       }
       return(echantillon)
     }
