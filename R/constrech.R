@@ -96,6 +96,9 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
       print(nombre1)
       print("nb lignes")
       print(nrow(basesondage1))
+      print("dispo et taille")
+      print(nombre1[t,2]-nombre1[t,1])
+      print(X[t])
       bsd=basesondage1[segment,]
       ifelse(is.null(bsd$risque),
              proba<-rep(1/nrow(bsd),nrow(bsd)),
