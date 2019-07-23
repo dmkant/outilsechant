@@ -21,14 +21,14 @@ reduction<-function(coeff,constantes,sup=NA,inf=NA){
     inf[is.na(inf)]=-Inf
     sup[is.na(sup)]=Inf
   }
-  #incProgress(0.09, detail = "Reduction systeme : Gestion des constantes additives")
+  incProgress(0.09, detail = "Reduction systeme : Gestion des constantes additives")
   #Gestion des constantes additive####
   if(!all(constantes==0)){
     sup=sup-constantes
     inf=inf-constantes
     constantes=0
   }
-  #incProgress(0.09, detail = "Reduction systeme : Gestion des lignes nulles")
+  incProgress(0.09, detail = "Reduction systeme : Gestion des lignes nulles")
   #Gestion des lignes nulles####
   presnull=which(apply(coeff,1,function(x) all(x==0)))
   if(length(presnull)>0){
@@ -62,7 +62,7 @@ reduction<-function(coeff,constantes,sup=NA,inf=NA){
   # Orientation des contraintes
   constranints_direction  <- c(rep("<=",nrow(coeff)),rep(">=",nrow(coeff)))
   utile=c("status","objval","solution")
-  # #incProgress(0.09, detail = "Reduction systeme : Bornes inférieures des paramètres")
+  incProgress(0.09, detail = "Reduction systeme : Bornes inférieures des paramètres")
   binf=sapply(1:ncol(identite),function(x) {#incProgress(0.09/ncol(identite), detail = paste0("Reduction systeme : Borne inférieure du paramètre ",x," sur ",ncol(identite)))
                                            lp(direction="min",
                                               objective.in = identite[x,],
@@ -71,7 +71,7 @@ reduction<-function(coeff,constantes,sup=NA,inf=NA){
                                               const.rhs = bornes,
                                               all.int = T)[utile]} )
   infidentite=round(unlist(binf["objval",]))
-  ##incProgress(0.09, detail = "Reduction systeme : Bornes superieures des paramètres")
+  incProgress(0.09, detail = "Reduction systeme : Bornes superieures des paramètres")
   bsup=sapply(1:ncol(identite),function(x){ #incProgress(0.09/ncol(identite), detail = paste0("Reduction systeme : Borne superieur du paramètre ",x," sur ",ncol(identite)))
                                             lp(direction="max",
                                               objective.in = identite[x,],

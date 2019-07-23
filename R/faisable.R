@@ -13,7 +13,7 @@
 #' #modalites=c("setosa","versicolor","virginica"),objectifs=c(98,123,100))
 #' #faisable(iris,constr)
 faisable<-function(data,constr,taillech=NA){
-  #withProgress(message = "Determination de la faisabilite", style = getShinyOption("progress.style", default = "notification"), value = 0, {
+  withProgress(message = "Determination de la faisabilite", style = getShinyOption("progress.style", default = "notification"), value = 0, {
     if(is.null(constr)){
       ifelse(taillech<=nrow(data),resu<-list(faisable=T),resu<-list(faisable=F,raison=paste("La taille de votre échantillon est supérieure au nombre de panélistes disponibles :", nrow(data))))
       return(resu)
@@ -38,7 +38,7 @@ faisable<-function(data,constr,taillech=NA){
     }
 
     # increase progress
-    #incProgress(0.1, detail = "Systeme lineaire : Pivot de Gauss")
+    incProgress(0.1, detail = "Systeme lineaire : Pivot de Gauss")
 
     #resoudre systeme lineaire AX=B
     ##Mise en place du systeme lineaire
@@ -53,14 +53,14 @@ faisable<-function(data,constr,taillech=NA){
     if(is.logical(objectif2)){objectif2<-as.numeric(objectif2)}
     sol=solvequ(A2,objectif2)
     if(!sol$faisable){
-      #incProgress(0.9, detail = "Finit")
+      incProgress(0.9, detail = "Finit")
       resu=list(faisable=F,raison="La combinaison de vos quotas est incompatible",systeme=sol)
       message("Impossible")
       return(resu)
     }
 
     # increase progress
-    #incProgress(0.15, detail = "Reduction systeme : Gestion des NA")
+    incProgress(0.15, detail = "Reduction systeme : Gestion des NA")
 
     #Condition sur les disponibilite
     dispo2=as.data.frame(table(data[,var]))
@@ -72,15 +72,14 @@ faisable<-function(data,constr,taillech=NA){
         resu$faisable=F
         resu$raison="Effectif(s) croisé(s) indisponible(s)"
         message("IMPOSSIBLE")
-
-        #incProgress(0.45, detail = "Finit")
+        incProgress(0.45, detail = "Finit")
         return(resu)
       }
       else{
         resu$faisable=T
         resu$prespara=F
         message("PARFAIT")
-        #incProgress(0.45, detail = "Finit")
+        incProgress(0.45, detail = "Finit")
         return(resu)
       }
     }
@@ -101,17 +100,17 @@ faisable<-function(data,constr,taillech=NA){
         message("PARFAIT")
         resu$faisable=T
         resu$prespara=T
-        #incProgress(0.09, detail = "Finit")
+        incProgress(0.09, detail = "Finit")
         return(resu)
       }
       else{
         message("IMPOSSIBLE")
         resu$faisable=F
         resu$raison="Effectif(s) croisé(s) indisponible(s)"
-        #incProgress(0.09, detail = "Finit")
+        incProgress(0.09, detail = "Finit")
         return(resu)
       }
     }
-  #})
+  })
 
 }

@@ -16,8 +16,8 @@ solvequ<-function(matsys,b){
   A2=pvg[,-ncol(pvg)]
   b2=pvg[,ncol(pvg)]
 
-  # increase progress
-  #incProgress(0.15, detail = "Systeme lineaire : Verification existence de solutions")
+   #increase progress
+  incProgress(0.15, detail = "Systeme lineaire : Verification existence de solutions")
 
   #Verification existence de solution
   ##Tous les dernierre lignes qui ne contiennes que des 0
@@ -28,14 +28,14 @@ solvequ<-function(matsys,b){
     #Presence de conditions
     existence=all(b2[prescond]==0) #verification des condition
     if ( existence==FALSE ){
-      #incProgress(0.15, detail = "Systeme lineaire : Mise en place des solutions")
+      incProgress(0.15, detail = "Systeme lineaire : Mise en place des solutions")
       return(list(message("PAS OK"),raison="Les quotas son incompatibles",faisable=F,coefficient=A2,constantes=as.matrix(b2)))
       }
     A2=A2[-prescond,]
     if(!is.matrix(A2)){A2<-matrix(A2,nrow=1)}
     b2=b2[-prescond]
   }
-  #incProgress(0.15, detail = "Systeme lineaire : Mise en place des solutions")
+  incProgress(0.15, detail = "Systeme lineaire : Mise en place des solutions")
   if (all(diag(A2)==1)){
     #Systeme echelonné avec des 1 sur la diagonale
     nbpara=dim(A2)[2]-dim(A2)[1]
