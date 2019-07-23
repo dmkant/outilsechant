@@ -84,7 +84,10 @@ faisable<-function(data,constr,taillech=NA){
       }
     }
     else{
-      coefficient=rbind(sol$coefficient[-sol$varlibre,],sol$coefficient[sol$varlibre,])
+      ifelse(ncol(sol$coefficient)==1,
+             coefficient<- matrix(c(sol$coefficient[-sol$varlibre,],sol$coefficient[sol$varlibre,])),
+             coefficient<- rbind(sol$coefficient[-sol$varlibre,],sol$coefficient[sol$varlibre,])
+                         )
       constante=matrix(c(sol$constantes[-sol$varlibre,],sol$constantes[sol$varlibre,]))
       disponible=c(dispo2$Freq[-sol$varlibre],dispo2$Freq[sol$varlibre])
       ncoeff=rbind(A%*%sol$coefficient,coefficient)

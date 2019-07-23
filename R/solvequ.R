@@ -65,7 +65,14 @@ solvequ<-function(matsys,b){
     nbvarlibre=length(varlibre)
     #on prend toutes les varibles et on les multiplie par -1 pour les faire passer de l'autre côte de l'equation
     Q=A2[,varlibre]*(-1)
-    if(!is.matrix(Q)){Q<-matrix(Q,nrow=1)}
+    if(!is.matrix(Q)){
+      if(nbvarlibre==1){
+        Q<-matrix(Q,ncol=1)
+      }
+      else{
+        Q<-matrix(Q,nrow=1)
+      }
+    }
     # fonction qui creeé une fusionne une matrice identité de taille vec avec des matrice de 0 des deux autre coté pour completer
     creationsemiident<-function(vec){
       tailleindic=length(vec)

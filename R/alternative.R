@@ -25,17 +25,17 @@
 alternative<-function(data,constr,taillech,ancien){
   f=faisable(data,constr)
   varint=as.character(unique(constr$variables[which(is.na(constr$objectifs))]))
-  nbmod=constr%>%filter(is.na(.data$objectifs))%>%group_by(.data$variables)%>%summarise(n=length(.data$variables))
+  nbmod=constr%>%filter(is.na(.data$objectifs))%>%group_by(.data$variables)%>%count_()
   nbmod=nbmod[match(varint,nbmod$variables),]
   if(1%in%nbmod$n){
     prob=as.character(nbmod$variables[which(nbmod$n==1)])
-    ifelse(length(prob)==1,mes<-paste("Vous n'avez rentre qu'un NA pour la variable ",prob,collapse = " "),
-           mes<-paste("Vous n'avez rentre qu'un NA pour les variables ",prob,collapse = " "))
+    ifelse(length(prob)==1,mes<-paste("Vous n'avez rentré qu'un NA pour la variable ",prob,collapse = " "),
+           mes<-paste("Vous n'avez rentré qu'un NA pour les variables ",prob,collapse = " "))
     return(mes)
   }
   if(f$faisable==F){
     message("Infaisable")
-    return("Ce n'est toujour pas faisable")
+    return("Ce n'est toujours pas faisable")
   }
   mat=matsyslin(data,constr)
   lignes=which(is.na(constr$objectifs))
@@ -43,7 +43,7 @@ alternative<-function(data,constr,taillech,ancien){
   nbpara=ncol(f$coefficient)
   #Contraintes supplementaire par variable qui a un na
   ##Indice par variable des modalite na
-  indmod=constr%>%mutate(modalites=1:n())%>%filter(is.na(.data$objectifs))%>%group_by(.data$variables)%>%summarise(L=list(.data$modalites))
+  indmod=constr%>%mutate(modalites=1:nrow(constr))%>%filter(is.na(.data$objectifs))%>%group_by(.data$variables)%>%summarise(L=list(.data$modalites))
   indmod=indmod[match(varint,indmod$variables),]
   ##Variable qui a au moins un na
   suplcoef=lapply(indmod$L, function(x) colSums(mat[unlist(x),]%*%f$coefficient))
