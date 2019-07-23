@@ -31,7 +31,8 @@ faisable<-function(data,constr,taillech=NA){
       message("Impossible")
       constrmax<-constr
       constrmax$disponible<-dispo1$Freq
-      constrmax$sup=dispo1$Freq[-enlever]<objectif[-enlever]
+      constrmax$sup=dispo1$Freq<objectif
+      constrmax$sup[enlever]=TRUE
       resu=list(faisable=F,raison=mess,disponibilite=constrmax)
       return(resu)
     }
