@@ -19,7 +19,7 @@ matsyslin<-function(data,constr){
   if(length(var)>1){dispo=arrange_(.data = dispo,.dots = var)}
 
   ##Nombre de modalite par variable
-  nbmod=constr%>%group_by(.data$variables)%>%summarise(n=length(.data$variables))
+  nbmod=constr%>%group_by(.data$variables)%>%count_()
   nbmod=nbmod[match(var,nbmod$variables),] # Ordonner de la meme manière que le tableau de quota
   #Nombre d'equation
   neq=sum(nbmod$n)

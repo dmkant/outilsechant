@@ -18,7 +18,7 @@
 #' #constrech(faisabl,iris,constr,TRUE)
 #' #constrech(faisabl,iris,constr,FALSE)
 constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
-  withProgress(message = "Construction de l'échantillon",value = 0, {
+  #withProgress(message = "Construction de l'échantillon",value = 0, {
     var=unique(as.character(constr$variables))
     dispo=as.data.frame(table(data[,var]))
     if(length(var)>1){dispo=arrange_(.data = dispo,.dots = var)}
@@ -150,5 +150,5 @@ constrech<-function(faisabl,data,constr,methode,nbsousech=NA){
     }
     #FIN ####
     return(list(echantillon=echantillon,changement=chang))
-  })
+  #})
 }
