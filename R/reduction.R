@@ -62,8 +62,8 @@ reduction<-function(coeff,constantes,sup=NA,inf=NA){
   # Orientation des contraintes
   constranints_direction  <- c(rep("<=",nrow(coeff)),rep(">=",nrow(coeff)))
   utile=c("status","objval","solution")
-  incProgress(0.09, detail = "Reduction systeme : Bornes inférieures des paramètres")
-  binf=sapply(1:ncol(identite),function(x) {#incProgress(0.09/ncol(identite), detail = paste0("Reduction systeme : Borne inférieure du paramètre ",x," sur ",ncol(identite)))
+  #incProgress(0.09, detail = "Reduction systeme : Bornes inférieures des paramètres")
+  binf=sapply(1:ncol(identite),function(x) {incProgress(0.09/ncol(identite), detail = paste0("Reduction systeme : Borne inférieure du paramètre ",x," sur ",ncol(identite)))
                                            lp(direction="min",
                                               objective.in = identite[x,],
                                               const.mat = contraintes,
@@ -71,8 +71,8 @@ reduction<-function(coeff,constantes,sup=NA,inf=NA){
                                               const.rhs = bornes,
                                               all.int = T)[utile]} )
   infidentite=round(unlist(binf["objval",]))
-  incProgress(0.09, detail = "Reduction systeme : Bornes superieures des paramètres")
-  bsup=sapply(1:ncol(identite),function(x){ #incProgress(0.09/ncol(identite), detail = paste0("Reduction systeme : Borne superieur du paramètre ",x," sur ",ncol(identite)))
+  #incProgress(0.09, detail = "Reduction systeme : Bornes superieures des paramètres")
+  bsup=sapply(1:ncol(identite),function(x){ incProgress(0.09/ncol(identite), detail = paste0("Reduction systeme : Borne superieur du paramètre ",x," sur ",ncol(identite)))
                                             lp(direction="max",
                                               objective.in = identite[x,],
                                               const.mat = contraintes,
