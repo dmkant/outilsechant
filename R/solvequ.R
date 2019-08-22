@@ -44,6 +44,7 @@ solvequ<-function(matsys,b){
     Q=A2[,(ncol(A2)-nbpara+1):ncol(A2)]*(-1)
     varlibre=(ncol(A2)-nbpara+1):ncol(A2)
     #les variables libres sont les nbapara derniere variables dans ce cas
+    if(!is.matrix(Q)){Q<-matrix(Q)}
     Q=rbind(Q,eye(nbpara))
     constante=rbind(as.matrix(b2),zeros(nbpara,1))
     return(list(faisable=T,coefficient=Q,constantes=constante,varlibre=varlibre))
