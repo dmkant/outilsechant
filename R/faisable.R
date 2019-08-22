@@ -54,7 +54,7 @@ faisable<-function(data,constr,taillech=NA){
     sol=solvequ(A2,objectif2)
     if(!sol$faisable){
       incProgress(0.9, detail = "Finit")
-      resu=list(faisable=F,raison="La combinaison de vos quotas est incompatible",systeme=sol)
+      resu=list(faisable=F,raison=sol$raison,systeme=sol)
       message("Impossible")
       return(resu)
     }

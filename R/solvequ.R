@@ -29,7 +29,7 @@ solvequ<-function(matsys,b){
     existence=all(b2[prescond]==0) #verification des condition
     if ( existence==FALSE ){
       incProgress(0.15, detail = "Systeme lineaire : Mise en place des solutions")
-      return(list(message("PAS OK"),raison="Les quotas son incompatibles",faisable=F,coefficient=A2,constantes=as.matrix(b2)))
+      return(list(message("PAS OK"),raison="La combinaison de vos quotas est incompatible",faisable=F,coefficient=A2,constantes=as.matrix(b2)))
       }
     A2=A2[-prescond,]
     if(!is.matrix(A2)){A2<-matrix(A2,nrow=1)}
@@ -39,7 +39,14 @@ solvequ<-function(matsys,b){
   if (all(diag(A2)==1)){
     #Systeme echelonné avec des 1 sur la diagonale
     nbpara=dim(A2)[2]-dim(A2)[1]
-    if (nbpara==0){return(list(faisable=T,coefficient=NULL,constantes=as.matrix(b2),varlibre=NULL))}
+    if (nbpara==0){
+      if(all(sapply(b2,is.integer))){
+        return(list(faisable=T,coefficient=NULL,constantes=as.matrix(b2),varlibre=NULL))
+      }
+      else{
+        return(list(faisable=F,raison="Il n'existe qu'une combinaison qui permette de respecter vos quotas et elle est composee de nombre(s) non-entier(s)",coefficient=NULL,constantes=as.matrix(b2),varlibre=NULL))
+      }
+    }
     diag(A2)=0
     Q=A2[,(ncol(A2)-nbpara+1):ncol(A2)]*(-1)
     varlibre=(ncol(A2)-nbpara+1):ncol(A2)
