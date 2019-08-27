@@ -40,7 +40,7 @@ solvequ<-function(matsys,b){
     #Systeme echelonné avec des 1 sur la diagonale
     nbpara=dim(A2)[2]-dim(A2)[1]
     if (nbpara==0){
-      if(all(sapply(b2,is.integer))){
+      if(all(sapply(b2,function(x) x==floor(x)))){
         return(list(faisable=T,coefficient=NULL,constantes=as.matrix(b2),varlibre=NULL))
       }
       else{
