@@ -23,7 +23,7 @@
 #' ancien=c(25,60)
 #' alternative(iris,constr,taillech,ancien)
 alternative<-function(data,constr,taillech,ancien){
-  f=faisable(data,constr)
+  f=faisable(data,constr);
   varint=as.character(unique(constr$variables[which(is.na(constr$objectifs))]))
   nbmod=constr%>%filter(is.na(.data$objectifs))%>%group_by(.data$variables)%>%count_()
   nbmod=nbmod[match(varint,nbmod$variables),]
